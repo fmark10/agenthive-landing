@@ -83,10 +83,33 @@
   /* ---------- Hero ---------- */
   .hero { padding: 90px 0 70px; text-align: center; position: relative; overflow: hidden; }
   .hero-glow {
-    position: absolute; top: -180px; left: 50%; transform: translateX(-50%);
+    position: absolute; top: -180px; left: 50%;
     width: 720px; height: 420px;
     background: radial-gradient(closest-side, rgba(91,95,239,0.16), transparent 70%);
     pointer-events: none;
+    animation: glow-drift 14s ease-in-out infinite;
+  }
+  @keyframes glow-drift {
+    0%, 100% { transform: translateX(-54%) translateY(0) scale(1); }
+    50% { transform: translateX(-46%) translateY(18px) scale(1.06); }
+  }
+
+  .hero-anim { opacity: 0; transform: translateY(14px); animation: fade-up 0.7s ease forwards; }
+  .hero-anim.d1 { animation-delay: 0.05s; }
+  .hero-anim.d2 { animation-delay: 0.16s; }
+  .hero-anim.d3 { animation-delay: 0.27s; }
+  .hero-anim.d4 { animation-delay: 0.38s; }
+  .hero-anim.d5 { animation-delay: 0.49s; }
+  @keyframes fade-up { to { opacity: 1; transform: translateY(0); } }
+
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-glow { animation: none; }
+    .hero-anim { animation: none; opacity: 1; transform: none; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .card:hover { transform: none; }
   }
   .badge {
     display: inline-flex; align-items: center; gap: 8px;
@@ -123,7 +146,11 @@
   .section-head h2 { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.02em; }
 
   .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px; }
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 26px; box-shadow: var(--shadow); }
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 26px; box-shadow: var(--shadow);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .card:hover { transform: translateY(-5px); box-shadow: 0 4px 10px rgba(20,22,31,0.06), 0 16px 32px rgba(20,22,31,0.1); }
   .icon-circle {
     width: 42px; height: 42px; border-radius: 11px; background: var(--bg-soft);
     display: flex; align-items: center; justify-content: center; font-size: 1.25rem; margin-bottom: 16px;
@@ -161,8 +188,8 @@
     <div class="logo"><span class="logo-dot"></span> Agenthive</div>
     <div class="nav-right">
       <select class="lang-select" id="langSelect" aria-label="Language">
-        <option value="de">Deutsch</option>
         <option value="en">English</option>
+        <option value="de">Deutsch</option>
         <option value="es">Español</option>
         <option value="zh">中文</option>
         <option value="ru">Русский</option>
@@ -175,14 +202,14 @@
 <section class="hero">
   <div class="hero-glow"></div>
   <div class="wrap-narrow">
-    <span class="badge"><span class="pulse"></span> <span data-i18n="badge">KI-Mitarbeiter, nach Bedarf</span></span>
-    <h1 data-i18n-html="heroH1">Stell deinen nächsten Mitarbeiter ein. <span class="gradient">Mach ihn zur KI.</span></h1>
-    <p class="sub" data-i18n="heroSub">Wir bauen spezialisierte KI-Agenten – für Social Media, Kundenservice, Verwaltung und mehr – die für dein Unternehmen arbeiten wie echte Mitarbeiter, nicht wie ein weiteres Tool.</p>
-    <div class="hero-actions">
+    <span class="badge hero-anim d1"><span class="pulse"></span> <span data-i18n="badge">KI-Mitarbeiter, nach Bedarf</span></span>
+    <h1 class="hero-anim d2" data-i18n="heroH1">Stell deinen nächsten Mitarbeiter ein. <span class="gradient">Mach ihn zur KI.</span></h1>
+    <p class="sub hero-anim d3" data-i18n="heroSub">Wir bauen spezialisierte KI-Agenten – für Social Media, Kundenservice, Verwaltung und mehr – die für dein Unternehmen arbeiten wie echte Mitarbeiter, nicht wie ein weiteres Tool.</p>
+    <div class="hero-actions hero-anim d4">
       <a class="btn-primary" href="#contact" data-i18n="ctaPrimary">Agent anfragen</a>
       <a class="btn-secondary" href="#how" data-i18n="ctaSecondary">So funktioniert's</a>
     </div>
-    <div class="hero-note" data-i18n="heroNote">Kein Abo-Zwang am Anfang. Sag uns einfach, was du brauchst.</div>
+    <div class="hero-note hero-anim d5" data-i18n="heroNote">Kein Abo-Zwang am Anfang. Sag uns einfach, was du brauchst.</div>
   </div>
 </section>
 
@@ -193,22 +220,22 @@
       <h2 data-i18n="featuresH2">Ein Agent für jede Aufgabe in deinem Unternehmen</h2>
     </div>
     <div class="grid">
-      <div class="card">
+      <div class="card reveal">
         <div class="icon-circle">💬</div>
         <h3 data-i18n="f1h">Kundenkontakt-Agenten</h3>
         <p data-i18n="f1p">Bearbeiten E-Mails, Chats und Support-Anfragen – schnell, zuverlässig, immer erreichbar.</p>
       </div>
-      <div class="card">
+      <div class="card reveal">
         <div class="icon-circle">📱</div>
         <h3 data-i18n="f2h">Marketing- &amp; Content-Agenten</h3>
         <p data-i18n="f2p">Planen, schreiben und terminieren Inhalte, die deine Marke und Zielgruppe verstehen.</p>
       </div>
-      <div class="card">
+      <div class="card reveal">
         <div class="icon-circle">📄</div>
         <h3 data-i18n="f3h">Verwaltungs- &amp; Korrespondenz-Agenten</h3>
         <p data-i18n="f3p">Verfassen Briefe, bearbeiten Dokumente, übernehmen den Papierkram, für den niemand Zeit hat.</p>
       </div>
-      <div class="card">
+      <div class="card reveal">
         <div class="icon-circle">🧩</div>
         <h3 data-i18n="f4h">Passgenau für dein Unternehmen</h3>
         <p data-i18n="f4p">Jeder Agent wird auf deinen konkreten Arbeitsablauf eingerichtet – kein generischer Bot.</p>
@@ -224,17 +251,17 @@
       <h2 data-i18n="howH2">Drei Schritte bis zu deinem Agenten</h2>
     </div>
     <div class="steps">
-      <div class="step">
+      <div class="step reveal">
         <div class="step-num">1</div>
         <h3 data-i18n="s1h">Sag uns, was du brauchst</h3>
         <p data-i18n="s1p">Ein kurzes Gespräch über dein Unternehmen und was deine Zeit frisst.</p>
       </div>
-      <div class="step">
+      <div class="step reveal">
         <div class="step-num">2</div>
         <h3 data-i18n="s2h">Wir bauen deinen Agenten</h3>
         <p data-i18n="s2p">Eingerichtet, getestet, einsatzbereit – meist innerhalb weniger Tage.</p>
       </div>
-      <div class="step">
+      <div class="step reveal">
         <div class="step-num">3</div>
         <h3 data-i18n="s3h">Er legt los</h3>
         <p data-i18n="s3p">Dein Agent arbeitet in den Werkzeugen, die du schon nutzt.</p>
@@ -245,7 +272,7 @@
 
 <section id="contact">
   <div class="wrap-narrow">
-    <div class="contact-box">
+    <div class="contact-box reveal">
       <h2 data-i18n="contactH2">Hast du etwas Bestimmtes im Kopf?</h2>
       <p data-i18n="contactP">Erzähl uns von deinem Unternehmen, wir melden uns mit dem, was möglich ist.</p>
       <div class="hero-actions">
@@ -397,9 +424,22 @@
 
   var select = document.getElementById("langSelect");
   var saved = localStorage.getItem("agenthive_lang");
-  var browserLang = (navigator.language || "en").slice(0, 2);
-  var initial = saved || (translations[browserLang] ? browserLang : "en");
+  var initial = saved || "en";
   select.value = initial;
   applyLang(initial);
+
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
+  } else {
+    document.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("visible"); });
+  }
   select.addEventListener("change", function () { applyLang(this.value); });
 </script>
