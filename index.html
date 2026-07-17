@@ -1,0 +1,405 @@
+<title>Agenthive — AI employees, on demand</title>
+<style>
+  :root {
+    --bg: #FFFFFF;
+    --bg-soft: #F6F7FB;
+    --ink: #14161F;
+    --ink-soft: #5B5F6E;
+    --border: #E7E8EF;
+    --accent-1: #5B5FEF;
+    --accent-2: #8B5CF6;
+    --accent-ink: #FFFFFF;
+    --card: #FFFFFF;
+    --shadow: 0 1px 2px rgba(20,22,31,0.04), 0 8px 24px rgba(20,22,31,0.06);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0E0F16; --bg-soft: #15161F; --ink: #F1F2F7; --ink-soft: #9A9EAE;
+      --border: #262838; --accent-1: #7B7FFF; --accent-2: #A78BFA; --accent-ink: #0E0F16;
+      --card: #171825; --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0E0F16; --bg-soft: #15161F; --ink: #F1F2F7; --ink-soft: #9A9EAE;
+    --border: #262838; --accent-1: #7B7FFF; --accent-2: #A78BFA; --accent-ink: #0E0F16;
+    --card: #171825; --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+  :root[data-theme="light"] {
+    --bg: #FFFFFF; --bg-soft: #F6F7FB; --ink: #14161F; --ink-soft: #5B5F6E;
+    --border: #E7E8EF; --accent-1: #5B5FEF; --accent-2: #8B5CF6; --accent-ink: #FFFFFF;
+    --card: #FFFFFF; --shadow: 0 1px 2px rgba(20,22,31,0.04), 0 8px 24px rgba(20,22,31,0.06);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 { text-wrap: balance; margin: 0; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  .wrap-narrow { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+  a { color: inherit; }
+
+  /* ---------- Nav ---------- */
+  nav { border-bottom: 1px solid var(--border); padding: 16px 0; }
+  .nav-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+  .logo { font-weight: 700; font-size: 1.05rem; letter-spacing: -0.01em; display: flex; align-items: center; gap: 8px; }
+  .logo-dot { width: 22px; height: 22px; border-radius: 7px; background: linear-gradient(135deg, var(--accent-1), var(--accent-2)); flex-shrink: 0; }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+
+  .lang-select {
+    appearance: none;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    color: var(--ink);
+    padding: 8px 30px 8px 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-family: inherit;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%235B5F6E'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+  }
+
+  .nav-cta {
+    background: var(--ink);
+    color: var(--bg);
+    padding: 9px 18px;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: 90px 0 70px; text-align: center; position: relative; overflow: hidden; }
+  .hero-glow {
+    position: absolute; top: -180px; left: 50%; transform: translateX(-50%);
+    width: 720px; height: 420px;
+    background: radial-gradient(closest-side, rgba(91,95,239,0.16), transparent 70%);
+    pointer-events: none;
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--bg-soft); border: 1px solid var(--border); color: var(--ink-soft);
+    font-size: 0.82rem; padding: 6px 14px; border-radius: 999px; margin-bottom: 26px;
+  }
+  .badge .pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--accent-1); }
+  .hero h1 { font-size: clamp(2.2rem, 5.6vw, 3.4rem); font-weight: 800; letter-spacing: -0.03em; max-width: 20ch; margin: 0 auto; }
+  .hero h1 .gradient {
+    background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero p.sub { margin: 22px auto 0; max-width: 52ch; font-size: 1.12rem; color: var(--ink-soft); }
+  .hero-actions { margin-top: 34px; display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+    color: var(--accent-ink); padding: 14px 26px; border-radius: 10px;
+    font-weight: 600; font-size: 0.98rem; text-decoration: none;
+    box-shadow: 0 8px 20px rgba(91,95,239,0.28);
+  }
+  .btn-primary:focus-visible { outline: 2px solid var(--accent-1); outline-offset: 3px; }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--card); border: 1px solid var(--border); color: var(--ink);
+    padding: 14px 22px; border-radius: 10px; font-weight: 600; font-size: 0.98rem; text-decoration: none;
+  }
+  .hero-note { margin-top: 16px; font-size: 0.82rem; color: var(--ink-soft); }
+
+  /* ---------- Sections ---------- */
+  section { padding: 64px 0; }
+  .section-head { text-align: center; max-width: 50ch; margin: 0 auto 44px; }
+  .eyebrow { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-1); margin-bottom: 10px; }
+  .section-head h2 { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.02em; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 26px; box-shadow: var(--shadow); }
+  .icon-circle {
+    width: 42px; height: 42px; border-radius: 11px; background: var(--bg-soft);
+    display: flex; align-items: center; justify-content: center; font-size: 1.25rem; margin-bottom: 16px;
+  }
+  .card h3 { font-size: 1.03rem; font-weight: 700; }
+  .card p { margin: 8px 0 0; color: var(--ink-soft); font-size: 0.92rem; }
+
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .step-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 34px; height: 34px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+    color: #fff; font-weight: 700; font-size: 0.9rem; margin-bottom: 14px;
+  }
+  .step h3 { font-size: 1rem; font-weight: 700; }
+  .step p { margin: 6px 0 0; color: var(--ink-soft); font-size: 0.9rem; }
+
+  .contact-box {
+    background: var(--bg-soft); border: 1px solid var(--border); border-radius: 20px;
+    padding: 48px 36px; text-align: center;
+  }
+  .contact-box h2 { font-size: 1.6rem; font-weight: 800; }
+  .contact-box p { margin: 12px auto 0; max-width: 42ch; color: var(--ink-soft); }
+  .contact-box .hero-actions { margin-top: 26px; }
+
+  footer { border-top: 1px solid var(--border); padding: 26px 0; text-align: center; font-size: 0.82rem; color: var(--ink-soft); }
+
+  @media (max-width: 720px) {
+    .steps { grid-template-columns: 1fr; }
+  }
+</style>
+
+<nav>
+  <div class="wrap nav-row">
+    <div class="logo"><span class="logo-dot"></span> Agenthive</div>
+    <div class="nav-right">
+      <select class="lang-select" id="langSelect" aria-label="Language">
+        <option value="de">Deutsch</option>
+        <option value="en">English</option>
+        <option value="es">Español</option>
+        <option value="zh">中文</option>
+        <option value="ru">Русский</option>
+      </select>
+      <a class="nav-cta" href="#contact" data-i18n="navCta">Kontakt aufnehmen</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="wrap-narrow">
+    <span class="badge"><span class="pulse"></span> <span data-i18n="badge">KI-Mitarbeiter, nach Bedarf</span></span>
+    <h1 data-i18n-html="heroH1">Stell deinen nächsten Mitarbeiter ein. <span class="gradient">Mach ihn zur KI.</span></h1>
+    <p class="sub" data-i18n="heroSub">Wir bauen spezialisierte KI-Agenten – für Social Media, Kundenservice, Verwaltung und mehr – die für dein Unternehmen arbeiten wie echte Mitarbeiter, nicht wie ein weiteres Tool.</p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#contact" data-i18n="ctaPrimary">Agent anfragen</a>
+      <a class="btn-secondary" href="#how" data-i18n="ctaSecondary">So funktioniert's</a>
+    </div>
+    <div class="hero-note" data-i18n="heroNote">Kein Abo-Zwang am Anfang. Sag uns einfach, was du brauchst.</div>
+  </div>
+</section>
+
+<section id="what">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow" data-i18n="featuresEyebrow">Was wir bauen</div>
+      <h2 data-i18n="featuresH2">Ein Agent für jede Aufgabe in deinem Unternehmen</h2>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="icon-circle">💬</div>
+        <h3 data-i18n="f1h">Kundenkontakt-Agenten</h3>
+        <p data-i18n="f1p">Bearbeiten E-Mails, Chats und Support-Anfragen – schnell, zuverlässig, immer erreichbar.</p>
+      </div>
+      <div class="card">
+        <div class="icon-circle">📱</div>
+        <h3 data-i18n="f2h">Marketing- &amp; Content-Agenten</h3>
+        <p data-i18n="f2p">Planen, schreiben und terminieren Inhalte, die deine Marke und Zielgruppe verstehen.</p>
+      </div>
+      <div class="card">
+        <div class="icon-circle">📄</div>
+        <h3 data-i18n="f3h">Verwaltungs- &amp; Korrespondenz-Agenten</h3>
+        <p data-i18n="f3p">Verfassen Briefe, bearbeiten Dokumente, übernehmen den Papierkram, für den niemand Zeit hat.</p>
+      </div>
+      <div class="card">
+        <div class="icon-circle">🧩</div>
+        <h3 data-i18n="f4h">Passgenau für dein Unternehmen</h3>
+        <p data-i18n="f4p">Jeder Agent wird auf deinen konkreten Arbeitsablauf eingerichtet – kein generischer Bot.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how" style="background:var(--bg-soft)">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow" data-i18n="howEyebrow">So funktioniert's</div>
+      <h2 data-i18n="howH2">Drei Schritte bis zu deinem Agenten</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3 data-i18n="s1h">Sag uns, was du brauchst</h3>
+        <p data-i18n="s1p">Ein kurzes Gespräch über dein Unternehmen und was deine Zeit frisst.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3 data-i18n="s2h">Wir bauen deinen Agenten</h3>
+        <p data-i18n="s2p">Eingerichtet, getestet, einsatzbereit – meist innerhalb weniger Tage.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3 data-i18n="s3h">Er legt los</h3>
+        <p data-i18n="s3p">Dein Agent arbeitet in den Werkzeugen, die du schon nutzt.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap-narrow">
+    <div class="contact-box">
+      <h2 data-i18n="contactH2">Hast du etwas Bestimmtes im Kopf?</h2>
+      <p data-i18n="contactP">Erzähl uns von deinem Unternehmen, wir melden uns mit dem, was möglich ist.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" id="contactBtn" href="mailto:hallo@agenthive.example?subject=Anfrage%20KI-Agent" data-i18n="contactBtnText">Anfrage senden</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer data-i18n="footer">Agenthive — KI-Mitarbeiter, nach Maß gebaut.</footer>
+
+<script>
+  var translations = {
+    de: {
+      navCta: "Kontakt aufnehmen",
+      badge: "KI-Mitarbeiter, nach Bedarf",
+      heroH1: 'Stell deinen nächsten Mitarbeiter ein. <span class="gradient">Mach ihn zur KI.</span>',
+      heroSub: "Wir bauen spezialisierte KI-Agenten – für Social Media, Kundenservice, Verwaltung und mehr – die für dein Unternehmen arbeiten wie echte Mitarbeiter, nicht wie ein weiteres Tool.",
+      ctaPrimary: "Agent anfragen",
+      ctaSecondary: "So funktioniert's",
+      heroNote: "Kein Abo-Zwang am Anfang. Sag uns einfach, was du brauchst.",
+      featuresEyebrow: "Was wir bauen",
+      featuresH2: "Ein Agent für jede Aufgabe in deinem Unternehmen",
+      f1h: "Kundenkontakt-Agenten", f1p: "Bearbeiten E-Mails, Chats und Support-Anfragen – schnell, zuverlässig, immer erreichbar.",
+      f2h: "Marketing- &amp; Content-Agenten", f2p: "Planen, schreiben und terminieren Inhalte, die deine Marke und Zielgruppe verstehen.",
+      f3h: "Verwaltungs- &amp; Korrespondenz-Agenten", f3p: "Verfassen Briefe, bearbeiten Dokumente, übernehmen den Papierkram, für den niemand Zeit hat.",
+      f4h: "Passgenau für dein Unternehmen", f4p: "Jeder Agent wird auf deinen konkreten Arbeitsablauf eingerichtet – kein generischer Bot.",
+      howEyebrow: "So funktioniert's", howH2: "Drei Schritte bis zu deinem Agenten",
+      s1h: "Sag uns, was du brauchst", s1p: "Ein kurzes Gespräch über dein Unternehmen und was deine Zeit frisst.",
+      s2h: "Wir bauen deinen Agenten", s2p: "Eingerichtet, getestet, einsatzbereit – meist innerhalb weniger Tage.",
+      s3h: "Er legt los", s3p: "Dein Agent arbeitet in den Werkzeugen, die du schon nutzt.",
+      contactH2: "Hast du etwas Bestimmtes im Kopf?",
+      contactP: "Erzähl uns von deinem Unternehmen, wir melden uns mit dem, was möglich ist.",
+      contactBtnText: "Anfrage senden",
+      footer: "Agenthive — KI-Mitarbeiter, nach Maß gebaut.",
+      mailSubject: "Anfrage KI-Agent"
+    },
+    en: {
+      navCta: "Get in touch",
+      badge: "AI employees, on demand",
+      heroH1: 'Hire your next employee. <span class="gradient">Make it AI.</span>',
+      heroSub: "We build specialized AI agents — for social media, customer service, admin work, and more — that work for your business like real employees, not just another tool.",
+      ctaPrimary: "Request your agent",
+      ctaSecondary: "How it works",
+      heroNote: "No subscription commitment to start. Just tell us what you need.",
+      featuresEyebrow: "What we build",
+      featuresH2: "An agent for every job in your business",
+      f1h: "Customer-facing agents", f1p: "Handle emails, chats, and support requests — fast, consistent, always on.",
+      f2h: "Marketing &amp; content agents", f2p: "Plan, write, and schedule content that understands your brand and audience.",
+      f3h: "Admin &amp; correspondence agents", f3p: "Draft letters, process documents, manage the paperwork nobody has time for.",
+      f4h: "Built around your business", f4p: "Every agent is configured for your specific workflow — not a generic bot.",
+      howEyebrow: "How it works", howH2: "Three steps to your agent",
+      s1h: "Tell us what you need", s1p: "A short conversation about your business and what's eating your time.",
+      s2h: "We build your agent", s2p: "Configured, tested, and ready to work — usually within days.",
+      s3h: "It gets to work", s3p: "Your agent operates inside the tools you already use.",
+      contactH2: "Have something specific in mind?",
+      contactP: "Tell us about your business and we'll get back to you with what's possible.",
+      contactBtnText: "Send an inquiry",
+      footer: "Agenthive — AI employees, built to order.",
+      mailSubject: "AI Agent inquiry"
+    },
+    es: {
+      navCta: "Contáctanos",
+      badge: "Personal de IA, bajo demanda",
+      heroH1: 'Contrata a tu próximo empleado. <span class="gradient">Que sea IA.</span>',
+      heroSub: "Creamos agentes de IA especializados — para redes sociales, atención al cliente, tareas administrativas y más — que trabajan para tu negocio como empleados reales, no como una herramienta más.",
+      ctaPrimary: "Solicita tu agente",
+      ctaSecondary: "Cómo funciona",
+      heroNote: "Sin compromiso de suscripción al inicio. Solo cuéntanos qué necesitas.",
+      featuresEyebrow: "Qué creamos",
+      featuresH2: "Un agente para cada tarea de tu negocio",
+      f1h: "Agentes de atención al cliente", f1p: "Gestionan correos, chats y solicitudes de soporte — rápido, constante, siempre disponible.",
+      f2h: "Agentes de marketing y contenido", f2p: "Planifican, escriben y programan contenido que entiende tu marca y tu audiencia.",
+      f3h: "Agentes administrativos y de correspondencia", f3p: "Redactan cartas, procesan documentos, se encargan del papeleo que nadie tiene tiempo de hacer.",
+      f4h: "Diseñado para tu negocio", f4p: "Cada agente se configura según tu flujo de trabajo específico — no es un bot genérico.",
+      howEyebrow: "Cómo funciona", howH2: "Tres pasos hasta tu agente",
+      s1h: "Cuéntanos qué necesitas", s1p: "Una breve conversación sobre tu negocio y qué te quita más tiempo.",
+      s2h: "Creamos tu agente", s2p: "Configurado, probado y listo para trabajar — normalmente en pocos días.",
+      s3h: "Se pone a trabajar", s3p: "Tu agente opera dentro de las herramientas que ya usas.",
+      contactH2: "¿Tienes algo específico en mente?",
+      contactP: "Cuéntanos sobre tu negocio y te responderemos con lo que es posible.",
+      contactBtnText: "Enviar solicitud",
+      footer: "Agenthive — empleados de IA, hechos a medida.",
+      mailSubject: "Solicitud de Agente IA"
+    },
+    zh: {
+      navCta: "联系我们",
+      badge: "按需定制的AI员工",
+      heroH1: '雇佣你的下一位员工——<span class="gradient">让它成为AI。</span>',
+      heroSub: "我们打造专属的AI智能体——用于社交媒体运营、客户服务、行政事务等——像真正的员工一样为你的企业工作，而不仅仅是又一个工具。",
+      ctaPrimary: "申请你的智能体",
+      ctaSecondary: "工作原理",
+      heroNote: "初期无需订阅承诺，告诉我们你的需求即可。",
+      featuresEyebrow: "我们打造什么",
+      featuresH2: "为企业每项任务配备智能体",
+      f1h: "客户服务智能体", f1p: "处理邮件、聊天和支持请求——快速、稳定、随时在线。",
+      f2h: "营销与内容智能体", f2p: "规划、撰写并安排内容，深入理解你的品牌与受众。",
+      f3h: "行政与文书智能体", f3p: "起草信函、处理文件，承担没人有时间做的文书工作。",
+      f4h: "为你的企业量身定制", f4p: "每个智能体都根据你的具体工作流程配置——不是通用机器人。",
+      howEyebrow: "工作原理", howH2: "三步打造你的智能体",
+      s1h: "告诉我们你的需求", s1p: "简短交流，了解你的业务以及最耗费你时间的事情。",
+      s2h: "我们打造你的智能体", s2p: "配置、测试、准备就绪——通常几天内完成。",
+      s3h: "开始工作", s3p: "你的智能体在你已经使用的工具中运行。",
+      contactH2: "心里已经有具体想法了吗？",
+      contactP: "告诉我们你的业务，我们会回复可行的方案。",
+      contactBtnText: "发送咨询",
+      footer: "Agenthive — 按需打造的AI员工。",
+      mailSubject: "AI智能体咨询"
+    },
+    ru: {
+      navCta: "Связаться с нами",
+      badge: "ИИ-сотрудники по запросу",
+      heroH1: 'Наймите следующего сотрудника. <span class="gradient">Пусть это будет ИИ.</span>',
+      heroSub: "Мы создаём специализированных ИИ-агентов — для соцсетей, поддержки клиентов, административных задач и не только — которые работают на ваш бизнес как настоящие сотрудники, а не просто ещё один инструмент.",
+      ctaPrimary: "Запросить агента",
+      ctaSecondary: "Как это работает",
+      heroNote: "Никаких обязательств по подписке в начале. Просто расскажите, что вам нужно.",
+      featuresEyebrow: "Что мы создаём",
+      featuresH2: "Агент для каждой задачи в вашем бизнесе",
+      f1h: "Агенты для работы с клиентами", f1p: "Обрабатывают письма, чаты и запросы поддержки — быстро, стабильно, всегда на связи.",
+      f2h: "Агенты маркетинга и контента", f2p: "Планируют, пишут и публикуют контент, понимая ваш бренд и аудиторию.",
+      f3h: "Агенты для документооборота", f3p: "Составляют письма, обрабатывают документы, берут на себя бумажную работу, на которую ни у кого нет времени.",
+      f4h: "Настроено под ваш бизнес", f4p: "Каждый агент настраивается под ваш конкретный рабочий процесс — это не универсальный бот.",
+      howEyebrow: "Как это работает", howH2: "Три шага к вашему агенту",
+      s1h: "Расскажите, что вам нужно", s1p: "Короткий разговор о вашем бизнесе и о том, что отнимает больше всего времени.",
+      s2h: "Мы создаём вашего агента", s2p: "Настроен, протестирован и готов к работе — обычно в течение нескольких дней.",
+      s3h: "Он приступает к работе", s3p: "Ваш агент работает в тех инструментах, которыми вы уже пользуетесь.",
+      contactH2: "Есть что-то конкретное на уме?",
+      contactP: "Расскажите нам о своём бизнесе, и мы ответим, что возможно.",
+      contactBtnText: "Отправить запрос",
+      footer: "Agenthive — ИИ-сотрудники, созданные на заказ.",
+      mailSubject: "Запрос ИИ-агента"
+    }
+  };
+
+  function applyLang(lang) {
+    var dict = translations[lang] || translations.en;
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-i18n]").forEach(function (el) {
+      var key = el.getAttribute("data-i18n");
+      if (dict[key] != null) el.innerHTML = dict[key];
+    });
+    var mailBtn = document.getElementById("contactBtn");
+    if (mailBtn) {
+      mailBtn.href = "mailto:hallo@agenthive.example?subject=" + encodeURIComponent(dict.mailSubject || "AI Agent inquiry");
+    }
+    localStorage.setItem("agenthive_lang", lang);
+  }
+
+  var select = document.getElementById("langSelect");
+  var saved = localStorage.getItem("agenthive_lang");
+  var browserLang = (navigator.language || "en").slice(0, 2);
+  var initial = saved || (translations[browserLang] ? browserLang : "en");
+  select.value = initial;
+  applyLang(initial);
+  select.addEventListener("change", function () { applyLang(this.value); });
+</script>
