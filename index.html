@@ -176,6 +176,23 @@
   .contact-box p { margin: 12px auto 0; max-width: 42ch; color: var(--ink-soft); }
   .contact-box .hero-actions { margin-top: 26px; }
 
+  .contact-form { margin-top: 26px; text-align: left; display: flex; flex-direction: column; gap: 16px; }
+  .form-row { display: flex; flex-direction: column; gap: 6px; }
+  .form-row label { font-size: 0.85rem; font-weight: 600; color: var(--ink-soft); }
+  .form-row input, .form-row textarea {
+    font-family: inherit; font-size: 0.95rem; color: var(--ink);
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+    padding: 11px 14px; resize: vertical;
+  }
+  .form-row input:focus, .form-row textarea:focus {
+    outline: none; border-color: var(--accent-1); box-shadow: 0 0 0 3px rgba(91,95,239,0.15);
+  }
+  #inquiryForm .btn-primary { border: none; cursor: pointer; align-self: flex-start; }
+  #inquiryForm .btn-primary:disabled { opacity: 0.6; cursor: default; }
+  .form-status { margin: 0; font-size: 0.88rem; min-height: 1.2em; }
+  .form-status.ok { color: #1F9D55; }
+  .form-status.err { color: var(--stamp, #C0392B); }
+
   footer { border-top: 1px solid var(--border); padding: 26px 0; text-align: center; font-size: 0.82rem; color: var(--ink-soft); }
 
   @media (max-width: 720px) {
@@ -275,9 +292,23 @@
     <div class="contact-box reveal">
       <h2 data-i18n="contactH2">Hast du etwas Bestimmtes im Kopf?</h2>
       <p data-i18n="contactP">Erzähl uns von deinem Unternehmen, wir melden uns mit dem, was möglich ist.</p>
-      <div class="hero-actions">
-        <a class="btn-primary" id="contactBtn" href="mailto:hallo@agenthive.example?subject=Anfrage%20KI-Agent" data-i18n="contactBtnText">Anfrage senden</a>
-      </div>
+
+      <form id="inquiryForm" class="contact-form">
+        <div class="form-row">
+          <label for="fName" data-i18n="formName">Name</label>
+          <input type="text" id="fName" name="name" required>
+        </div>
+        <div class="form-row">
+          <label for="fEmail" data-i18n="formEmail">E-Mail</label>
+          <input type="email" id="fEmail" name="email" required>
+        </div>
+        <div class="form-row">
+          <label for="fMessage" data-i18n="formMessage">Was brauchst du?</label>
+          <textarea id="fMessage" name="message" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn-primary" id="formSubmitBtn" data-i18n="contactBtnText">Anfrage senden</button>
+        <p class="form-status" id="formStatus" role="status"></p>
+      </form>
     </div>
   </div>
 </section>
@@ -308,7 +339,12 @@
       contactP: "Erzähl uns von deinem Unternehmen, wir melden uns mit dem, was möglich ist.",
       contactBtnText: "Anfrage senden",
       footer: "Agenthive — KI-Mitarbeiter, nach Maß gebaut.",
-      mailSubject: "Anfrage KI-Agent"
+      mailSubject: "Anfrage KI-Agent",
+      formName: "Name",
+      formEmail: "E-Mail",
+      formMessage: "Was brauchst du?",
+      formSuccess: "Danke! Wir melden uns bald bei dir.",
+      formError: "Etwas ist schiefgelaufen. Bitte versuch es erneut."
     },
     en: {
       navCta: "Get in touch",
@@ -332,7 +368,12 @@
       contactP: "Tell us about your business and we'll get back to you with what's possible.",
       contactBtnText: "Send an inquiry",
       footer: "Agenthive — AI employees, built to order.",
-      mailSubject: "AI Agent inquiry"
+      mailSubject: "AI Agent inquiry",
+      formName: "Name",
+      formEmail: "Email",
+      formMessage: "What do you need?",
+      formSuccess: "Thanks! We'll get back to you soon.",
+      formError: "Something went wrong. Please try again."
     },
     es: {
       navCta: "Contáctanos",
@@ -356,7 +397,12 @@
       contactP: "Cuéntanos sobre tu negocio y te responderemos con lo que es posible.",
       contactBtnText: "Enviar solicitud",
       footer: "Agenthive — empleados de IA, hechos a medida.",
-      mailSubject: "Solicitud de Agente IA"
+      mailSubject: "Solicitud de Agente IA",
+      formName: "Nombre",
+      formEmail: "Correo electrónico",
+      formMessage: "¿Qué necesitas?",
+      formSuccess: "¡Gracias! Te responderemos pronto.",
+      formError: "Algo salió mal. Inténtalo de nuevo."
     },
     zh: {
       navCta: "联系我们",
@@ -380,7 +426,12 @@
       contactP: "告诉我们你的业务，我们会回复可行的方案。",
       contactBtnText: "发送咨询",
       footer: "Agenthive — 按需打造的AI员工。",
-      mailSubject: "AI智能体咨询"
+      mailSubject: "AI智能体咨询",
+      formName: "姓名",
+      formEmail: "邮箱",
+      formMessage: "你需要什么？",
+      formSuccess: "谢谢！我们会尽快回复你。",
+      formError: "出了点问题，请重试。"
     },
     ru: {
       navCta: "Связаться с нами",
@@ -404,7 +455,12 @@
       contactP: "Расскажите нам о своём бизнесе, и мы ответим, что возможно.",
       contactBtnText: "Отправить запрос",
       footer: "Agenthive — ИИ-сотрудники, созданные на заказ.",
-      mailSubject: "Запрос ИИ-агента"
+      mailSubject: "Запрос ИИ-агента",
+      formName: "Имя",
+      formEmail: "Эл. почта",
+      formMessage: "Что вам нужно?",
+      formSuccess: "Спасибо! Мы скоро с вами свяжемся.",
+      formError: "Что-то пошло не так. Попробуйте ещё раз."
     }
   };
 
@@ -415,10 +471,6 @@
       var key = el.getAttribute("data-i18n");
       if (dict[key] != null) el.innerHTML = dict[key];
     });
-    var mailBtn = document.getElementById("contactBtn");
-    if (mailBtn) {
-      mailBtn.href = "mailto:hallo@agenthive.example?subject=" + encodeURIComponent(dict.mailSubject || "AI Agent inquiry");
-    }
     localStorage.setItem("agenthive_lang", lang);
   }
 
@@ -442,4 +494,39 @@
     document.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("visible"); });
   }
   select.addEventListener("change", function () { applyLang(this.value); });
+
+  // TODO: replace with your real Formspree form ID (from formspree.io dashboard, "Integration" tab)
+  var FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID";
+
+  var form = document.getElementById("inquiryForm");
+  var statusEl = document.getElementById("formStatus");
+  var submitBtn = document.getElementById("formSubmitBtn");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var dict = translations[select.value] || translations.en;
+    submitBtn.disabled = true;
+    statusEl.textContent = "";
+    statusEl.className = "form-status";
+
+    fetch(FORMSPREE_ENDPOINT, {
+      method: "POST",
+      headers: { "Accept": "application/json" },
+      body: new FormData(form)
+    }).then(function (response) {
+      if (response.ok) {
+        statusEl.textContent = dict.formSuccess;
+        statusEl.className = "form-status ok";
+        form.reset();
+      } else {
+        statusEl.textContent = dict.formError;
+        statusEl.className = "form-status err";
+      }
+    }).catch(function () {
+      statusEl.textContent = dict.formError;
+      statusEl.className = "form-status err";
+    }).finally(function () {
+      submitBtn.disabled = false;
+    });
+  });
 </script>
