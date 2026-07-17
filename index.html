@@ -159,6 +159,31 @@
   }
   .section-head h2 { font-size: 1.9rem; font-weight: 600; }
 
+  .explainer-text { font-size: 1.15rem; color: var(--ink-soft); max-width: 58ch; }
+
+  .pains-list { display: flex; flex-direction: column; gap: 0; }
+  .pain-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+    padding: 22px 0; border-bottom: 1px solid var(--border);
+  }
+  .pain-row:last-child { border-bottom: none; }
+  .pain, .solve { display: flex; align-items: flex-start; gap: 12px; font-size: 1rem; }
+  .pain { color: var(--ink-soft); }
+  .pain .x {
+    flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%;
+    background: rgba(169,78,23,0.12); color: var(--amber-deep);
+    display: flex; align-items: center; justify-content: center; font-size: 0.7rem; margin-top: 2px;
+  }
+  .solve { color: var(--ink); font-weight: 600; }
+  .solve .tick {
+    flex-shrink: 0; width: 22px; height: 22px; background: var(--amber);
+    color: #201705; display: flex; align-items: center; justify-content: center;
+    font-size: 0.72rem; margin-top: 2px;
+  }
+  @media (max-width: 720px) {
+    .pain-row { grid-template-columns: 1fr; gap: 10px; }
+  }
+
   .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; }
   .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 28px; box-shadow: var(--shadow); }
   .hex-badge {
@@ -255,6 +280,47 @@
 
 <div class="divider"><span class="line"></span><span class="hex"></span><span class="line"></span></div>
 
+<section id="explainer">
+  <div class="wrap-narrow">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="explainerEyebrow">Neu hier?</div>
+      <h2 data-i18n="explainerH2">Was ist eigentlich ein KI-Agent?</h2>
+    </div>
+    <p class="explainer-text reveal" data-i18n="explainerText">Stell es dir vor wie einen Mitarbeiter, der nie schläft, nichts vergisst und dein Unternehmen von Tag eins an versteht. Er liest, was deine Kunden schreiben, versteht was sie brauchen, und antwortet – in ihrer Sprache, in deinem Ton. Du prüfst nur noch und bestätigst, bevor irgendetwas rausgeht.</p>
+  </div>
+</section>
+
+<div class="divider"><span class="line"></span><span class="hex"></span><span class="line"></span></div>
+
+<section id="pains" style="background:var(--card)">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="painsEyebrow">Kommt dir bekannt vor?</div>
+      <h2 data-i18n="painsH2">Dafür hast du dein Unternehmen nicht gegründet.</h2>
+    </div>
+    <div class="pains-list">
+      <div class="pain-row reveal">
+        <div class="pain"><span class="x">✕</span> <span data-i18n="p1x">Du hast keine Lust, dich mit Google Ads und Marketing-Strategie rumzuschlagen.</span></div>
+        <div class="solve"><span class="hex tick">✓</span> <span data-i18n="p1s">Dein Marketing-Agent plant und schreibt es für dich.</span></div>
+      </div>
+      <div class="pain-row reveal">
+        <div class="pain"><span class="x">✕</span> <span data-i18n="p2x">Du bist es leid, den ganzen Tag dieselben Antworten an Kunden zu tippen.</span></div>
+        <div class="solve"><span class="hex tick">✓</span> <span data-i18n="p2s">Dein Kundenkontakt-Agent übernimmt das – schnell, zuverlässig, immer erreichbar.</span></div>
+      </div>
+      <div class="pain-row reveal">
+        <div class="pain"><span class="x">✕</span> <span data-i18n="p3x">Dein Kunde spricht eine Sprache, die du nicht beherrschst.</span></div>
+        <div class="solve"><span class="hex tick">✓</span> <span data-i18n="p3s">Dein Agent übersetzt und antwortet, ganz automatisch.</span></div>
+      </div>
+      <div class="pain-row reveal">
+        <div class="pain"><span class="x">✕</span> <span data-i18n="p4x">Du brauchst eine Webseite, hast aber keine Zeit, sie zu bauen.</span></div>
+        <div class="solve"><span class="hex tick">✓</span> <span data-i18n="p4s">Wir bauen sie – mit eingebautem Agent, der jeden Besucher begrüßt und berät.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><span class="line"></span><span class="hex"></span><span class="line"></span></div>
+
 <section id="what">
   <div class="wrap">
     <div class="section-head reveal">
@@ -276,6 +342,11 @@
         <div class="hex-badge hex">📄</div>
         <h3 data-i18n="f3h">Verwaltungs- &amp; Korrespondenz-Agenten</h3>
         <p data-i18n="f3p">Verfassen Briefe, bearbeiten Dokumente, übernehmen den Papierkram, für den niemand Zeit hat.</p>
+      </div>
+      <div class="card reveal">
+        <div class="hex-badge hex">🌐</div>
+        <h3 data-i18n="f5h">Webseiten &amp; Landingpages</h3>
+        <p data-i18n="f5p">Wir bauen deine Seite gleich mit – inklusive eingebautem Agent, der Besucher begrüßt und berät.</p>
       </div>
       <div class="card reveal">
         <div class="hex-badge hex">🧩</div>
@@ -357,11 +428,25 @@
       ctaPrimary: "Agent anfragen",
       ctaSecondary: "So funktioniert's",
       heroNote: "Kein Abo-Zwang am Anfang. Sag uns einfach, was du brauchst.",
+      explainerEyebrow: "Neu hier?",
+      explainerH2: "Was ist eigentlich ein KI-Agent?",
+      explainerText: "Stell es dir vor wie einen Mitarbeiter, der nie schläft, nichts vergisst und dein Unternehmen von Tag eins an versteht. Er liest, was deine Kunden schreiben, versteht was sie brauchen, und antwortet – in ihrer Sprache, in deinem Ton. Du prüfst nur noch und bestätigst, bevor irgendetwas rausgeht.",
+      painsEyebrow: "Kommt dir bekannt vor?",
+      painsH2: "Dafür hast du dein Unternehmen nicht gegründet.",
+      p1x: "Du hast keine Lust, dich mit Google Ads und Marketing-Strategie rumzuschlagen.",
+      p1s: "Dein Marketing-Agent plant und schreibt es für dich.",
+      p2x: "Du bist es leid, den ganzen Tag dieselben Antworten an Kunden zu tippen.",
+      p2s: "Dein Kundenkontakt-Agent übernimmt das – schnell, zuverlässig, immer erreichbar.",
+      p3x: "Dein Kunde spricht eine Sprache, die du nicht beherrschst.",
+      p3s: "Dein Agent übersetzt und antwortet, ganz automatisch.",
+      p4x: "Du brauchst eine Webseite, hast aber keine Zeit, sie zu bauen.",
+      p4s: "Wir bauen sie – mit eingebautem Agent, der jeden Besucher begrüßt und berät.",
       featuresEyebrow: "Was wir bauen",
       featuresH2: "Ein Agent für jede Aufgabe in deinem Unternehmen",
       f1h: "Kundenkontakt-Agenten", f1p: "Bearbeiten E-Mails, Chats und Support-Anfragen – schnell, zuverlässig, immer erreichbar.",
       f2h: "Marketing- &amp; Content-Agenten", f2p: "Planen, schreiben und terminieren Inhalte, die deine Marke und Zielgruppe verstehen.",
       f3h: "Verwaltungs- &amp; Korrespondenz-Agenten", f3p: "Verfassen Briefe, bearbeiten Dokumente, übernehmen den Papierkram, für den niemand Zeit hat.",
+      f5h: "Webseiten &amp; Landingpages", f5p: "Wir bauen deine Seite gleich mit – inklusive eingebautem Agent, der Besucher begrüßt und berät.",
       f4h: "Passgenau für dein Unternehmen", f4p: "Jeder Agent wird auf deinen konkreten Arbeitsablauf eingerichtet – kein generischer Bot.",
       howEyebrow: "So funktioniert's", howH2: "Drei Schritte bis zu deinem Agenten",
       s1h: "Sag uns, was du brauchst", s1p: "Ein kurzes Gespräch über dein Unternehmen und was deine Zeit frisst.",
@@ -383,11 +468,25 @@
       ctaPrimary: "Request your agent",
       ctaSecondary: "How it works",
       heroNote: "No subscription commitment to start. Just tell us what you need.",
+      explainerEyebrow: "New here?",
+      explainerH2: "What is an AI agent, anyway?",
+      explainerText: "Think of it as an employee who never sleeps, never forgets, and understands your business from day one. It reads what your customers send, understands what they need, and replies — in their language, in your tone. You just review and approve before anything goes out.",
+      painsEyebrow: "Sound familiar?",
+      painsH2: "You didn't start a business to do this.",
+      p1x: "You don't want to deal with Google Ads and marketing strategy.",
+      p1s: "Your marketing agent plans and writes it for you.",
+      p2x: "You're tired of typing the same replies to customers all day.",
+      p2s: "Your customer-facing agent handles it — fast, consistent, always on.",
+      p3x: "Your customer speaks a language you don't.",
+      p3s: "Your agent translates and replies, automatically.",
+      p4x: "You need a website but no time to build one.",
+      p4s: "We build it — with an agent built in that greets and helps every visitor.",
       featuresEyebrow: "What we build",
       featuresH2: "An agent for every job in your business",
       f1h: "Customer-facing agents", f1p: "Handle emails, chats, and support requests — fast, consistent, always on.",
       f2h: "Marketing &amp; content agents", f2p: "Plan, write, and schedule content that understands your brand and audience.",
       f3h: "Admin &amp; correspondence agents", f3p: "Draft letters, process documents, manage the paperwork nobody has time for.",
+      f5h: "Websites &amp; landing pages", f5p: "We build your site too — with a built-in agent that greets and helps every visitor.",
       f4h: "Built around your business", f4p: "Every agent is configured for your specific workflow — not a generic bot.",
       howEyebrow: "How it works", howH2: "Three steps to your agent",
       s1h: "Tell us what you need", s1p: "A short conversation about your business and what's eating your time.",
@@ -409,11 +508,25 @@
       ctaPrimary: "Solicita tu agente",
       ctaSecondary: "Cómo funciona",
       heroNote: "Sin compromiso de suscripción al inicio. Solo cuéntanos qué necesitas.",
+      explainerEyebrow: "¿Nuevo por aquí?",
+      explainerH2: "¿Qué es realmente un agente de IA?",
+      explainerText: "Imagínalo como un empleado que nunca duerme, nunca olvida y entiende tu negocio desde el primer día. Lee lo que te escriben tus clientes, entiende qué necesitan, y responde — en su idioma, con tu tono. Tú solo revisas y apruebas antes de que algo se envíe.",
+      painsEyebrow: "¿Te suena familiar?",
+      painsH2: "No montaste un negocio para esto.",
+      p1x: "No tienes ganas de lidiar con anuncios de Google y estrategia de marketing.",
+      p1s: "Tu agente de marketing lo planifica y escribe por ti.",
+      p2x: "Estás cansado de escribir las mismas respuestas a clientes todo el día.",
+      p2s: "Tu agente de atención al cliente se encarga — rápido, constante, siempre disponible.",
+      p3x: "Tu cliente habla un idioma que tú no dominas.",
+      p3s: "Tu agente traduce y responde, automáticamente.",
+      p4x: "Necesitas una página web pero no tienes tiempo de crearla.",
+      p4s: "La creamos nosotros — con un agente integrado que recibe y ayuda a cada visitante.",
       featuresEyebrow: "Qué creamos",
       featuresH2: "Un agente para cada tarea de tu negocio",
       f1h: "Agentes de atención al cliente", f1p: "Gestionan correos, chats y solicitudes de soporte — rápido, constante, siempre disponible.",
       f2h: "Agentes de marketing y contenido", f2p: "Planifican, escriben y programan contenido que entiende tu marca y tu audiencia.",
       f3h: "Agentes administrativos y de correspondencia", f3p: "Redactan cartas, procesan documentos, se encargan del papeleo que nadie tiene tiempo de hacer.",
+      f5h: "Sitios web y landing pages", f5p: "También creamos tu web — con un agente integrado que recibe y ayuda a cada visitante.",
       f4h: "Diseñado para tu negocio", f4p: "Cada agente se configura según tu flujo de trabajo específico — no es un bot genérico.",
       howEyebrow: "Cómo funciona", howH2: "Tres pasos hasta tu agente",
       s1h: "Cuéntanos qué necesitas", s1p: "Una breve conversación sobre tu negocio y qué te quita más tiempo.",
@@ -435,11 +548,25 @@
       ctaPrimary: "申请你的智能体",
       ctaSecondary: "工作原理",
       heroNote: "初期无需订阅承诺，告诉我们你的需求即可。",
+      explainerEyebrow: "初次了解？",
+      explainerH2: "AI智能体到底是什么？",
+      explainerText: "把它想象成一位从不休息、从不遗忘、从第一天起就了解你业务的员工。它阅读客户发来的信息，理解他们的需求，并用他们的语言、你的语气回复。你只需在发送前审核确认即可。",
+      painsEyebrow: "是不是很熟悉？",
+      painsH2: "你创业不是为了做这些事。",
+      p1x: "你不想搞Google广告和营销策略。",
+      p1s: "你的营销智能体会为你规划并撰写。",
+      p2x: "你厌倦了整天给客户打同样的回复。",
+      p2s: "你的客服智能体来处理——快速、稳定、随时在线。",
+      p3x: "你的客户说着你不会的语言。",
+      p3s: "你的智能体会自动翻译并回复。",
+      p4x: "你需要一个网站，却没时间建一个。",
+      p4s: "我们来建——内置一个迎接并帮助每位访客的智能体。",
       featuresEyebrow: "我们打造什么",
       featuresH2: "为企业每项任务配备智能体",
       f1h: "客户服务智能体", f1p: "处理邮件、聊天和支持请求——快速、稳定、随时在线。",
       f2h: "营销与内容智能体", f2p: "规划、撰写并安排内容，深入理解你的品牌与受众。",
       f3h: "行政与文书智能体", f3p: "起草信函、处理文件，承担没人有时间做的文书工作。",
+      f5h: "网站与落地页", f5p: "我们也为你建站——内置一个迎接并帮助每位访客的智能体。",
       f4h: "为你的企业量身定制", f4p: "每个智能体都根据你的具体工作流程配置——不是通用机器人。",
       howEyebrow: "工作原理", howH2: "三步打造你的智能体",
       s1h: "告诉我们你的需求", s1p: "简短交流，了解你的业务以及最耗费你时间的事情。",
@@ -461,11 +588,25 @@
       ctaPrimary: "Запросить агента",
       ctaSecondary: "Как это работает",
       heroNote: "Никаких обязательств по подписке в начале. Просто расскажите, что вам нужно.",
+      explainerEyebrow: "Впервые здесь?",
+      explainerH2: "Что такое ИИ-агент на самом деле?",
+      explainerText: "Представьте сотрудника, который никогда не спит, ничего не забывает и с первого дня понимает ваш бизнес. Он читает сообщения от ваших клиентов, понимает, что им нужно, и отвечает — на их языке, в вашем стиле. Вы лишь проверяете и подтверждаете, прежде чем что-либо отправится.",
+      painsEyebrow: "Знакомая ситуация?",
+      painsH2: "Вы начинали бизнес не для этого.",
+      p1x: "Не хочется разбираться в рекламе Google и маркетинговой стратегии.",
+      p1s: "Ваш маркетинговый агент спланирует и напишет это за вас.",
+      p2x: "Устали печатать одни и те же ответы клиентам целый день.",
+      p2s: "Ваш агент по работе с клиентами берёт это на себя — быстро, стабильно, всегда на связи.",
+      p3x: "Ваш клиент говорит на языке, которым вы не владеете.",
+      p3s: "Ваш агент переводит и отвечает автоматически.",
+      p4x: "Нужен сайт, но нет времени его создавать.",
+      p4s: "Мы создадим его — со встроенным агентом, который встречает и помогает каждому посетителю.",
       featuresEyebrow: "Что мы создаём",
       featuresH2: "Агент для каждой задачи в вашем бизнесе",
       f1h: "Агенты для работы с клиентами", f1p: "Обрабатывают письма, чаты и запросы поддержки — быстро, стабильно, всегда на связи.",
       f2h: "Агенты маркетинга и контента", f2p: "Планируют, пишут и публикуют контент, понимая ваш бренд и аудиторию.",
       f3h: "Агенты для документооборота", f3p: "Составляют письма, обрабатывают документы, берут на себя бумажную работу, на которую ни у кого нет времени.",
+      f5h: "Сайты и лендинги", f5p: "Мы создадим и ваш сайт — со встроенным агентом, который встречает и помогает каждому посетителю.",
       f4h: "Настроено под ваш бизнес", f4p: "Каждый агент настраивается под ваш конкретный рабочий процесс — это не универсальный бот.",
       howEyebrow: "Как это работает", howH2: "Три шага к вашему агенту",
       s1h: "Расскажите, что вам нужно", s1p: "Короткий разговор о вашем бизнесе и о том, что отнимает больше всего времени.",
