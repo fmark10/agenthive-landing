@@ -161,6 +161,43 @@
 
   .explainer-text { font-size: 1.15rem; color: var(--ink-soft); max-width: 58ch; }
 
+  .explainer-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: center; }
+  .explainer-visual { display: flex; justify-content: center; }
+  .chat-flow { width: 100%; max-width: 260px; height: auto; }
+  .cf-frame { fill: var(--card); stroke: var(--border); stroke-width: 1.5; }
+  .cf-bubble-in { fill: var(--paper); }
+  .cf-line-in { stroke: var(--ink-soft); stroke-width: 3; stroke-linecap: round; }
+  .cf-bubble-out { fill: var(--amber); }
+  .cf-line-out { stroke: #201705; stroke-width: 3; stroke-linecap: round; opacity: 0.85; }
+  .cf-check-circle { fill: none; stroke: var(--amber-deep); stroke-width: 3; }
+  .cf-check-mark { fill: none; stroke: var(--amber-deep); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+
+  .cf-msg-in { animation: cf-in 4s ease-in-out infinite; }
+  .cf-msg-out { animation: cf-out 4s ease-in-out infinite; }
+  .cf-msg-check { animation: cf-check 4s ease-in-out infinite; }
+  @keyframes cf-in {
+    0%   { opacity: 0; transform: translateY(6px); }
+    10%, 60% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes cf-out {
+    0%, 30% { opacity: 0; transform: translateY(6px); }
+    45%, 80% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes cf-check {
+    0%, 55% { opacity: 0; transform: scale(0.6); }
+    70%, 92% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.6); }
+  }
+  @media (max-width: 760px) {
+    .explainer-grid { grid-template-columns: 1fr; }
+    .explainer-visual { order: -1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cf-msg-in, .cf-msg-out, .cf-msg-check { animation: none; opacity: 1; transform: none; }
+  }
+
   .pains-list { display: flex; flex-direction: column; gap: 0; }
   .pain-row {
     display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
@@ -184,12 +221,45 @@
     .pain-row { grid-template-columns: 1fr; gap: 10px; }
   }
 
+  .decay-chart-wrap { margin-top: 28px; display: flex; justify-content: center; }
+  .decay-chart { width: 100%; max-width: 420px; height: auto; }
+  .dc-axis { stroke: var(--border); stroke-width: 1.5; }
+  .dc-marker { stroke: var(--border); stroke-width: 1.5; stroke-dasharray: 4 4; }
+  .dc-decline {
+    fill: none; stroke: var(--ink-soft); stroke-width: 3; stroke-linecap: round;
+    stroke-dasharray: 1 1; animation: dc-draw 4s ease-in-out infinite;
+  }
+  .dc-recover {
+    fill: none; stroke: var(--amber); stroke-width: 3; stroke-linecap: round;
+    stroke-dasharray: 1 1; stroke-dashoffset: 1; animation: dc-draw-recover 4s ease-in-out infinite;
+  }
+  .dc-dot-old { fill: var(--ink-soft); opacity: 0; animation: dc-dot-old 4s ease-in-out infinite; }
+  .dc-dot-new { fill: var(--amber-deep); opacity: 0; animation: dc-dot-new 4s ease-in-out infinite; }
+  @keyframes dc-draw { 0% { stroke-dashoffset: 1; } 45%, 100% { stroke-dashoffset: 0; } }
+  @keyframes dc-draw-recover { 0%, 45% { stroke-dashoffset: 1; } 85%, 100% { stroke-dashoffset: 0; } }
+  @keyframes dc-dot-old { 0%, 40% { opacity: 0; } 50%, 100% { opacity: 1; } }
+  @keyframes dc-dot-new { 0%, 80% { opacity: 0; } 90%, 100% { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) {
+    .dc-decline, .dc-recover { animation: none; stroke-dashoffset: 0; }
+    .dc-dot-old, .dc-dot-new { animation: none; opacity: 1; }
+  }
+
   .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; }
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 28px; box-shadow: var(--shadow); }
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 28px;
+    box-shadow: var(--shadow); transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+  }
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 36px rgba(222,138,42,0.22), var(--shadow);
+    border-color: var(--amber);
+  }
   .hex-badge {
     width: 46px; height: 46px; background: var(--amber); display: flex; align-items: center;
     justify-content: center; font-size: 1.2rem; margin-bottom: 18px;
+    transition: transform 0.35s cubic-bezier(.2,.8,.2,1);
   }
+  .card:hover .hex-badge { transform: scale(1.12) rotate(-6deg); }
   .card h3 { font-family: 'Public Sans', sans-serif; font-size: 1.03rem; font-weight: 700; }
   .card p { margin: 8px 0 0; color: var(--ink-soft); font-size: 0.93rem; }
 
@@ -281,12 +351,33 @@
 <div class="divider"><span class="line"></span><span class="hex"></span><span class="line"></span></div>
 
 <section id="explainer">
-  <div class="wrap-narrow">
-    <div class="section-head reveal">
-      <div class="eyebrow" data-i18n="explainerEyebrow">Neu hier?</div>
-      <h2 data-i18n="explainerH2">Was ist eigentlich ein KI-Agent?</h2>
+  <div class="wrap-narrow explainer-grid">
+    <div>
+      <div class="section-head reveal">
+        <div class="eyebrow" data-i18n="explainerEyebrow">Neu hier?</div>
+        <h2 data-i18n="explainerH2">Was ist eigentlich ein KI-Agent?</h2>
+      </div>
+      <p class="explainer-text reveal" data-i18n="explainerText">Stell es dir vor wie einen Mitarbeiter, der nie schläft, nichts vergisst und dein Unternehmen von Tag eins an versteht. Er liest, was deine Kunden schreiben, versteht was sie brauchen, und antwortet – in ihrer Sprache, in deinem Ton. Du prüfst nur noch und bestätigst, bevor irgendetwas rausgeht.</p>
     </div>
-    <p class="explainer-text reveal" data-i18n="explainerText">Stell es dir vor wie einen Mitarbeiter, der nie schläft, nichts vergisst und dein Unternehmen von Tag eins an versteht. Er liest, was deine Kunden schreiben, versteht was sie brauchen, und antwortet – in ihrer Sprache, in deinem Ton. Du prüfst nur noch und bestätigst, bevor irgendetwas rausgeht.</p>
+    <div class="explainer-visual reveal" aria-hidden="true">
+      <svg class="chat-flow" viewBox="0 0 220 170" xmlns="http://www.w3.org/2000/svg">
+        <rect class="cf-frame" x="6" y="6" width="208" height="158" rx="16"/>
+        <g class="cf-msg-in">
+          <rect class="cf-bubble-in" x="24" y="30" width="130" height="34" rx="12"/>
+          <line class="cf-line-in" x1="38" y1="42" x2="118" y2="42"/>
+          <line class="cf-line-in" x1="38" y1="53" x2="90" y2="53"/>
+        </g>
+        <g class="cf-msg-out">
+          <rect class="cf-bubble-out" x="66" y="82" width="130" height="34" rx="12"/>
+          <line class="cf-line-out" x1="80" y1="94" x2="160" y2="94"/>
+          <line class="cf-line-out" x1="80" y1="105" x2="132" y2="105"/>
+        </g>
+        <g class="cf-msg-check" transform="translate(66,128)">
+          <circle class="cf-check-circle" cx="14" cy="14" r="13"/>
+          <polyline class="cf-check-mark" points="7,14 12,19 21,9"/>
+        </g>
+      </svg>
+    </div>
   </div>
 </section>
 
@@ -319,6 +410,16 @@
         <div class="pain"><span class="x">✕</span> <span data-i18n="p5x">Deine Werbeanzeige läuft wochenlang, bis sie einfach nicht mehr konvertiert.</span></div>
         <div class="solve"><span class="hex tick">✓</span> <span data-i18n="p5s">Dein Marketing-Agent tauscht sie regelmäßig gegen neue KI-Anzeigen aus – Studien zeigen, dass die Klickrate schon in der ersten Woche um 20–40% einbrechen kann, wenn dieselbe Anzeige zu lange läuft. Alte Anzeigen verbrennen so still dein Budget.</span></div>
       </div>
+    </div>
+    <div class="decay-chart-wrap reveal" aria-hidden="true">
+      <svg class="decay-chart" viewBox="0 0 300 110" xmlns="http://www.w3.org/2000/svg">
+        <line class="dc-axis" x1="10" y1="95" x2="290" y2="95"/>
+        <line class="dc-marker" x1="150" y1="10" x2="150" y2="95"/>
+        <path class="dc-decline" pathLength="1" d="M10,25 C60,30 110,55 145,80"/>
+        <path class="dc-recover" pathLength="1" d="M155,20 C190,28 230,45 290,55"/>
+        <circle class="dc-dot dc-dot-old" cx="145" cy="80" r="4"/>
+        <circle class="dc-dot dc-dot-new" cx="155" cy="20" r="4"/>
+      </svg>
     </div>
   </div>
 </section>
